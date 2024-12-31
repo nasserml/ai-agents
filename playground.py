@@ -1,14 +1,18 @@
+import openai
 from phi.agent import Agent
-from phi.model.groq import Groq
+import phi.api
+from phi.model.openai import OpenAIChat
 from phi.tools.yfinance import YFinanceTools
 from phi.tools.duckduckgo import DuckDuckGo
-import os
-import openai
 from dotenv import load_dotenv
+import os
+import phi 
+from phi.playground import Playground, serve_playground_app
+from phi.model.groq import Groq
+
 load_dotenv()
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
-## web search agent
+phi.api = os.getenv("PHI_API_KEY")
 web_search_agent=Agent(
     name="Web Search Agent",
     role="Search the web for information",
@@ -30,11 +34,8 @@ finance_agent = Agent(
         show_tool_calls=True,
         markdown=True
 )
-multi_ai_agent = Agent(
-    team=[web_search_agent, finance_agent],
-    instructions=["Always include sources", "Use tables to display the data"],
-    show_tool_calls=True,
-    markdown=True
-)
 
-multi_ai_agent.print_response("Summarize analyst recommendations and share the latest news for NVDA", stream=True)
+app = Playground(agents=[finance_agent, web_search_agent]).get_app()
+
+if __name__ == "__main__":
+    serve_playground_app("playground:app", reload=True)

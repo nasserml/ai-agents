@@ -4,5 +4,6 @@ yfinance
 packaging
 duckduckgo-search
 fastapi
-unicorn
+uvicorn
 groq
+openai
