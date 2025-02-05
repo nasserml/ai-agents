@@ -185,7 +185,7 @@ os.environ["OLLAMA_HOST"] = "0.0.0.0"
 
 !pip install pyngrok
 
-!ngrok authtoken 2ZiN5jNYjmzZi3UJUJ7IgFI0r2c_7CxxKcjbQCra1RqmUXnzX
+!ngrok authtoken <YOUR_AUTH_TOKEN>
 
 from pyngrok import ngrok
 
